@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Фармоишҳо</h2>
+    <a href="{% url 'order_create' %}" class="btn baby-btn">Эҷоди фармоиш</a>
+</div>
+
+<form class="row g-2 mb-3">
+    <div class="col-md-3">
+        <select name="status" class="form-select">
+            <option value="">Ҳамаи ҳолатҳо</option>
+            <option value="new">Нав</option>
+            <option value="sent">Фиристода шуд</option>
+            <option value="delivered">Расонда шуд</option>
+            <option value="canceled">Бекор карда шуд</option>
+            <option value="returned">Баргардонидан</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <input type="date" name="start_date" class="form-control">
+    </div>
+    <div class="col-md-3">
+        <input type="date" name="end_date" class="form-control">
+    </div>
+    <div class="col-md-3">
+        <button class="btn baby-btn w-100">Филтр кардан</button>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table baby-table align-middle">
+        <thead>
+            <tr>
+                <th>Рақам</th>
+                <th>Сана</th>
+                <th>Ҳолат</th>
+                <th>Маблағ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order_number }}</td>
+                <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                <td>{{ order.get_status_display }}</td>
+                <td>{{ order.total }} TJS</td>
+                <td>
+                    <a href="{% url 'order_detail' order.pk %}" class="btn btn-sm btn-outline-secondary">
+                        Кушодан
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">Фармоиш нест.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

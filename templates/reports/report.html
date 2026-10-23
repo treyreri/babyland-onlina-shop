@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Ҳисобот</h2>
+
+<form class="row g-2 mb-4">
+    <div class="col-md-3">
+        <select name="period" class="form-select">
+            <option value="today">Имрӯз</option>
+            <option value="yesterday">Дирӯз</option>
+            <option value="month">Ин моҳ</option>
+            <option value="custom">Мӯҳлати ихтиёрӣ</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <input type="date" name="start_date" class="form-control">
+    </div>
+    <div class="col-md-3">
+        <input type="date" name="end_date" class="form-control">
+    </div>
+    <div class="col-md-3">
+        <button class="btn baby-btn w-100">Нишон додан</button>
+    </div>
+</form>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card baby-card p-3">
+            <div>Фармоишҳои расондашуда</div>
+            <h3>{{ orders_count }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card baby-card p-3">
+            <div>Даромад</div>
+            <h3>{{ revenue }} TJS</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card baby-card p-3">
+            <div>Арзиши харид</div>
+            <h3>{{ cost }} TJS</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card baby-card p-3">
+            <div>Хароҷотҳо</div>
+            <h3 class="text-danger">{{ expenses_total }} TJS</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card baby-card p-3">
+            <div>Фоидаи умумӣ</div>
+            <h3>{{ gross_profit }} TJS</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card baby-card p-3">
+            <div>Фоидаи соф</div>
+            <h3 class="text-success">{{ net_profit }} TJS</h3>
+        </div>
+    </div>
+</div>
+{% endblock %}

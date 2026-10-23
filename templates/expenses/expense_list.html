@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Хароҷотҳо</h2>
+    <a href="{% url 'expense_create' %}" class="btn baby-btn">Илова кардани хароҷот</a>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<div class="table-responsive">
+    <table class="table baby-table align-middle">
+        <thead>
+            <tr>
+                <th>Сана</th>
+                <th>Гурӯҳ</th>
+                <th>Маблағ</th>
+                <th>Шарҳ</th>
+                <th>Амалҳо</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.date|date:"d.m.Y" }}</td>
+                <td>{{ expense.get_category_display }}</td>
+                <td>{{ expense.amount }} TJS</td>
+                <td>{{ expense.comment }}</td>
+                <td class="d-flex gap-2">
+                    <a href="{% url 'expense_update' expense.pk %}" class="btn btn-sm btn-outline-secondary">
+                        Тағйир додан
+                    </a>
+                    <a href="{% url 'expense_delete' expense.pk %}" class="btn btn-sm btn-outline-danger">
+                        Нест кардан
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">Хароҷот нест.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

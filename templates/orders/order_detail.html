@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Фармоиши {{ order.order_number }}</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<div class="card baby-card p-4 mb-3">
+    <p><strong>Сана:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+    <p><strong>Ҳолат:</strong> {{ order.get_status_display }}</p>
+    <p><strong>Маблағи умумӣ:</strong> {{ order.total }} TJS</p>
+
+    <form method="post" class="row g-2 align-items-end">
+        {% csrf_token %}
+        <div class="col-md-6">
+            {{ form.status.label_tag }}
+            {{ form.status }}
+        </div>
+        <div class="col-md-4">
+            {{ form.comment.label_tag }}
+            {{ form.comment }}
+        </div>
+        <div class="col-md-2">
+            <button class="btn baby-btn w-100">Нигоҳ доштан</button>
+        </div>
+    </form>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h4>Маҳсулотҳои фармоиш</h4>
+    <a href="{% url 'order_add_item' order.pk %}" class="btn baby-btn">
+        Илова кардани маҳсулот
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table baby-table align-middle">
+        <thead>
+            <tr>
+                <th>Маҳсулот</th>
+                <th>Миқдор</th>
+                <th>Нарх</th>
+                <th>Маблағ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.unit_price }} TJS</td>
+                <td>{{ item.total }} TJS</td>
+                <td>
+                    <a href="{% url 'order_item_delete' item.pk %}" class="btn btn-sm btn-outline-danger">
+                        Нест кардан
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Дар фармоиш ҳоло маҳсулот нест.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url 'order_list' %}" class="btn btn-outline-secondary">Ба фармоишҳо</a>
+{% endblock %}

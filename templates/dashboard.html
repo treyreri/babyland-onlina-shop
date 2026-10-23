@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Асосӣ</h2>
+
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="card baby-card p-3">
+            <div>Имрӯз расонда шуд</div>
+            <h3>{{ delivered_today_count }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card baby-card p-3">
+            <div>Даромади имрӯз</div>
+            <h3>{{ revenue_today }} TJS</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card baby-card p-3">
+            <div>Хароҷоти имрӯз</div>
+            <h3 class="text-danger">{{ expenses_today }} TJS</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card baby-card p-3">
+            <div>Фоидаи имрӯз</div>
+            <h3 class="text-success">{{ profit_today }} TJS</h3>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card baby-card p-3">
+            <div>Даромади ин моҳ</div>
+            <h3>{{ revenue_month }} TJS</h3>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card baby-card p-3">
+            <div>Фоидаи ин моҳ</div>
+            <h3 class="text-success">{{ profit_month }} TJS</h3>
+        </div>
+    </div>
+</div>
+
+<h4 class="mt-4">Маҳсулотҳои боқимондаашон кам</h4>
+
+{% if low_stock_products %}
+<ul class="list-group">
+    {% for product in low_stock_products %}
+        <li class="list-group-item">
+            {{ product }} — боқимонда: {{ product.stock_quantity }}
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Ҳамаи боқимондаҳо муқаррарӣанд.</p>
+{% endif %}
+{% endblock %}

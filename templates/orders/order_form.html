@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Фармоиши нав</h2>
+
+<form method="post" class="card baby-card p-4">
+    {% csrf_token %}
+
+    <div id="order-items">
+        <div class="row g-2 mb-2 order-row">
+            <div class="col-md-8">
+                <select name="product" class="form-select" required>
+                    {% for product in products %}
+                        <option value="{{ product.pk }}">
+                            {{ product }} — {{ product.selling_price }} TJS
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <input type="number" name="quantity" min="1" value="1" class="form-control">
+            </div>
+
+            <div class="col-md-1">
+                <button type="button" class="btn btn-outline-danger w-100 remove-row">×</button>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" id="add-row" class="btn btn-outline-secondary mb-3">
+        Илова кардани маҳсулоти дигар
+    </button>
+
+    <button class="btn baby-btn">Эҷоди фармоиш</button>
+</form>
+
+<script>
+document.getElementById("add-row").addEventListener("click", function () {
+    const container = document.getElementById("order-items");
+    const firstRow = container.querySelector(".order-row");
+    const newRow = firstRow.cloneNode(true);
+
+    newRow.querySelector("input[name='quantity']").value = 1;
+
+    newRow.querySelector(".remove-row").addEventListener("click", function () {
+        newRow.remove();
+    });
+
+    container.appendChild(newRow);
+});
+
+document.querySelectorAll(".remove-row").forEach(function (button) {
+    button.addEventListener("click", function () {
+        button.closest(".order-row").remove();
+    });
+});
+</script>
+{% endblock %}
